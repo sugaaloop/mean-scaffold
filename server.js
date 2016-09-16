@@ -48,10 +48,6 @@ app.get('*', function(req, res) {
 });
 
 
-
-
-
-
 // start app ===============================================
 // startup our app at http://localhost:8080
 app.listen(port);               
