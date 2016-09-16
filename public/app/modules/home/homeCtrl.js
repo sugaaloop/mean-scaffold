@@ -4,6 +4,6 @@
     homeCtrl.$inject = [];
     function homeCtrl() {
         var vm = this;
-        vm.title = "Welcome Home Bby!";
+        vm.title = "bobhennessey.net";
     }
 })();

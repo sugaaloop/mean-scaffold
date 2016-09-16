@@ -1,21 +1,27 @@
 (function () {
     'use strict';
     angular.module('net.bobhennessey').config(config);
-    config.$inject = ['$stateProvider', '$urlRouterProvider'];
-    function config($stateProvider, $urlRouterProvider) {
+    config.$inject = ['$stateProvider', '$locationProvider'];
+    function config($stateProvider, $locationProvider) {
 
-        //$urlRouterProvider.otherwise('/');
         $stateProvider
             .state({
-                name: 'home',
-                url: '/',
-                templateUrl: '/app/modules/home/index.html'
+                name: 'layout',
+                abstract: true,
+                templateUrl: 'views/layout.html'
             })
             .state({
-                name: 'beers',
+                name: 'layout.home',
+                url: '/',
+                templateUrl: 'app/modules/home/index.html'
+            })
+            .state({
+                name: 'layout.beers',
                 url: '/beers',
-                templateUrl: '/app/modules/beers/index.html'
+                templateUrl: 'app/modules/beers/index.html'
             });
+
+        $locationProvider.html5Mode(true);
 
     }
 })();
