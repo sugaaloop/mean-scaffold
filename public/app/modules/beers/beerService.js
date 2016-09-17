@@ -1,27 +1,28 @@
 (function () {
     'use strict';
     angular.module('net.bobhennessey.beers').factory('beerService', beerService);
-    beerService.$inject = ['$http'];
-    function beerService($http) {
+    beerService.$inject = ['beerApi'];
+    function beerService(beerApi) {
         var factory = {};
+        factory.beers = [];
 
         factory.getBeers = function () {
-            return $http.get('/api/beers');
+            return beerApi.getBeers().then(function (response) {
+                factory.beers = response.data;
+            });
         }
 
         factory.getBeer = function (id) {
-            return $http.get('/api/beers/id');
+            return beerApi.getBeer(id);
         }
 
         factory.addBeeer = function (beer) {
-            return $http.post('/api/beers', beer);
+            return beerApi.addBeer(beer);
         }
 
-        factory.newBeer = function () {
-            return new Beer();
+        factory.newBeer = function (name, brewer, style, abv) {
+            return new Beer(name, brewer, style, abv);
         }
-
-
 
         function Beer(name, brewer, style, abv) {
             this.name = typeof name === 'undefined' ? '' : name;

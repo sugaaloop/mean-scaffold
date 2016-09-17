@@ -2,7 +2,7 @@
     <h1>{{ vm.title }}</h1>
     <ul>
         <li><beer-form></beer-form></li>
-        <li ng-repeat="beer in vm.beers">
+        <li ng-repeat="beer in vm.beers.beers">
             <beer-form beer="beer"><beer-form>
         </li>
     </ul>

@@ -4,12 +4,11 @@
     beerCtrl.$inject = ['beerService'];
     function beerCtrl(beerService) {
         var vm = this;
+        vm.beers = beerService;
 
         var init = function () {
             vm.title = "Beer Time.";
-            beerService.getBeers().then(function (response) {
-                vm.beers = response.data;
-            });
+            beerService.getBeers();
         }
         
         init();

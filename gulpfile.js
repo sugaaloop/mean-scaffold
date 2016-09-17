@@ -7,16 +7,23 @@ var gulp = require('gulp'),
     plugins = require('gulp-load-plugins')(),
     del = require('del');
 
+console.log(plugins);
+// get environment
+var envIsProd = argv.prod ? true : false;
+console.log(envIsProd ? 'Running gulp for production' : 'Running gulp for development');
+
 var paths = {
     distSrc: 'public/dist',
-    appDataSrc: 'public/dist/app_data',
+    scripts_core: [
+        'public/libs/angular/angular.js'
+    ],
     scripts: [
-        'public/libs/angular/angular.js',
         'public/libs/ui-router/release/angular-ui-router.js',
         'public/app/app.js',
         'public/app/config/*.js',
         'public/app/modules/**/*.js'
-    ],   
+    ],
+    scriptsDestFile: 'scripts.min.js',
     // sassSrc: [        
     //     'Content/SCSS/**/*.scss'
     // ],
@@ -49,17 +56,39 @@ gulp.task('clean', function () {
 //         .pipe(gulp.dest(paths.distSrc));
 // });
 
-gulp.task('scripts', ['clean'], function () {
-    return gulp.src(paths.scripts)
+gulp.task('scripts_prod', ['clean'], function () {
+    return gulp.src(paths.scripts_core.concat(paths.scripts))
         .pipe(plugins.uglify())
-        .pipe(plugins.concat('scripts.min.js'))
+        .pipe(plugins.concat(paths.scriptsDestFile))
         .pipe(gulp.dest(paths.distSrc));
 });
 
-// gulp.task('cacheBust', ['scripts'], function () {
-//     return gulp.src(paths.distSrc + '/*')
-//         .pipe(plugins.buster())
-//         .pipe(gulp.dest(paths.appDataSrc));
-// });
+gulp.task('scripts_dev', ['clean'], function () {
+    return gulp.src(paths.scripts_core)
+        .pipe(plugins.rename({prefix: '__'}))
+        .pipe(plugins.addSrc(paths.scripts))
+        .pipe(plugins.rename({dirname: ''}))
+        .pipe(gulp.dest(paths.distSrc));
+});
 
-gulp.task('default', ['scripts']);
+gulp.task('cache_bust', [(envIsProd ? 'scripts_prod' : 'scripts_dev')], function () {
+    return gulp.src(paths.distSrc + '/*.js')
+        .pipe(plugins.buster({relativePath: 'public'}))
+        .pipe(gulp.dest(paths.distSrc));
+});
+
+gulp.task('inject_scripts', ['cache_bust'], function () {
+    var busters = require('./' + paths.distSrc + '/busters.json');
+    var source = gulp.src('dist/*.js', {read: false, cwd: __dirname + '/public'});
+    return gulp.src(paths.index)
+        .pipe(plugins.inject(source, {
+            transform: function (filepath) {
+                var hash = busters[filepath.slice(1)];
+                console.log('hash: ', hash, 'filepath: ', filepath);
+                return '<script src="' + filepath + '?' + hash + '"></script>';
+            }
+        }))
+        .pipe(gulp.dest(paths.distSrc));
+});
+
+gulp.task('default', ['inject_scripts']);

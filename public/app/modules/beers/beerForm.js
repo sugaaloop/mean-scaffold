@@ -11,6 +11,7 @@
             beer: '=?'
         }
         directive.link = link;
+        directive.ctrl = ['$scope', ctrl];
 
         return directive;
 
@@ -18,6 +19,17 @@
             if (typeof scope.beer === 'undefined') {
                 scope.beer = beerService.newBeer();
                 scope.beer.isEditing = true;
+            }
+        }
+        function ctrl($scope) {
+            var vm = this;
+            
+            vm.submitBeer = function () {
+                beerService.addBeer($scope.beer).then(function (response) {
+
+                    $scope.beer = beerService.newBeer();
+                    $scope.beer.isEditing = true;
+                });
             }
         }
     }
