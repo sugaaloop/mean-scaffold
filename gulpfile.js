@@ -17,6 +17,11 @@ var paths = {
     scripts_core: [
         'public/libs/angular/angular.js'
     ],
+    html: [
+        'public/views/*.html',
+        'public/app/*.html',
+        'public/app/modules/**/*.html'
+    ],
     scripts: [
         'public/libs/ui-router/release/angular-ui-router.js',
         'public/app/app.js',
@@ -56,6 +61,12 @@ gulp.task('clean', function () {
 //         .pipe(gulp.dest(paths.distSrc));
 // });
 
+gulp.task('html', ['clean'], function () {
+    return gulp.src(paths.html)
+        .pipe(plugins.rename({dirname: ''}))
+        .pipe(gulp.dest(paths.distSrc));
+});
+
 gulp.task('scripts_prod', ['clean'], function () {
     return gulp.src(paths.scripts_core.concat(paths.scripts))
         .pipe(plugins.uglify())
@@ -77,10 +88,10 @@ gulp.task('cache_bust', [(envIsProd ? 'scripts_prod' : 'scripts_dev')], function
         .pipe(gulp.dest(paths.distSrc));
 });
 
-gulp.task('inject_scripts', ['cache_bust'], function () {
+gulp.task('inject_scripts', ['html', 'cache_bust'], function () {
     var busters = require('./' + paths.distSrc + '/busters.json');
     var source = gulp.src('dist/*.js', {read: false, cwd: __dirname + '/public'});
-    return gulp.src(paths.index)
+    return gulp.src(paths.distSrc + '/index.html')
         .pipe(plugins.inject(source, {
             transform: function (filepath) {
                 var hash = busters[filepath.slice(1)];
