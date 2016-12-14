@@ -8,7 +8,7 @@ var gulp = require('gulp'),
     del = require('del');
 
 console.log(plugins);
-// get environment
+// get environment -- defaults to dev
 var envIsProd = argv.prod ? true : false;
 console.log(envIsProd ? 'Running gulp for production' : 'Running gulp for development');
 
@@ -29,7 +29,7 @@ var paths = {
         'public/app/modules/**/*.js'
     ],
     scriptsDestFile: 'scripts.min.js',
-    // sassSrc: [        
+    // sassSrc: [
     //     'Content/SCSS/**/*.scss'
     // ],
     // appCss: [
@@ -55,8 +55,8 @@ gulp.task('clean', function () {
 // });
 
 // gulp.task('appCss', ['cssPlugins'], function () {
-//     return gulp.src(paths.appCss)        
-//         .pipe(plugins.cleanCss({ relativeTo: paths.distSrc, target: paths.distSrc }))        
+//     return gulp.src(paths.appCss)
+//         .pipe(plugins.cleanCss({ relativeTo: paths.distSrc, target: paths.distSrc }))
 //         .pipe(plugins.concat('application.min.css'))
 //         .pipe(gulp.dest(paths.distSrc));
 // });

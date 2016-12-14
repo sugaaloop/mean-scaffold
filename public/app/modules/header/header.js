@@ -6,7 +6,7 @@
         var directive = {};
 
         directive.restrict = 'E';
-        directive.templateUrl = 'app/modules/header/index.html';
+        directive.templateUrl = 'app/modules/header/header.html';
 
         return directive;
     }
