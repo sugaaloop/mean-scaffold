@@ -7,7 +7,6 @@
         var env = 'prod';
         var prodUrlPrefix = 'dist/';
 
-
         $stateProvider
             .state({
                 name: 'layout',

@@ -90,7 +90,7 @@ gulp.task('cache_bust', [(envIsProd ? 'scripts_prod' : 'scripts_dev')], function
 
 gulp.task('inject_scripts', ['html', 'cache_bust'], function () {
     var busters = require('./' + paths.distSrc + '/busters.json');
-    var source = gulp.src('dist/*.js', {read: false, cwd: __dirname + '/public'});
+    var source = gulp.src('dist/*.js', { cwd: __dirname + '/public' }).pipe(plugins.angularFilesort());
     return gulp.src(paths.distSrc + '/index.html')
         .pipe(plugins.inject(source, {
             transform: function (filepath) {
