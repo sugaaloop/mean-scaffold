@@ -76,15 +76,15 @@ gulp.task('scripts_prod', ['clean'], function () {
 
 gulp.task('scripts_dev', ['clean'], function () {
     return gulp.src(paths.scripts_core)
-        .pipe(plugins.rename({prefix: '__'}))
+        .pipe(plugins.rename({ prefix: '__' }))
         .pipe(plugins.addSrc(paths.scripts))
-        .pipe(plugins.rename({dirname: ''}))
+        .pipe(plugins.rename({ dirname: '' }))
         .pipe(gulp.dest(paths.distSrc));
 });
 
 gulp.task('cache_bust', [(envIsProd ? 'scripts_prod' : 'scripts_dev')], function () {
     return gulp.src(paths.distSrc + '/*.js')
-        .pipe(plugins.buster({relativePath: 'public'}))
+        .pipe(plugins.buster({ relativePath: 'public' }))
         .pipe(gulp.dest(paths.distSrc));
 });
 
