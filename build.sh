@@ -18,7 +18,8 @@ echo "archived the app"
 
 # copy tarball to dest
 #scp -i /var/lib/jenkins/.ssh/id_rsa ./build.tar webadmin@bobhennessey.net:/var/www/bobhennessey.net-STAGING
-cp ./build.tar /var/www/bobhennessey.net-STAGING
+mkdir -p /var/www/bobhennessey.net-STAGING
+cp ./build.tar /var/www/bobhennessey.net-STAGING/build.tar
 echo "copied the app"
 
 # extract the app
