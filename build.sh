@@ -10,7 +10,7 @@ gulp --prod
 echo "ran gulp --prod"
 
 # tarball the app
-tar -cf build.tar ./app ./config ./public ./server.js
+tar -cf build.tar ./app ./config ./public ./server.js ./node_modules
 echo "archived the app"
 
 # backup and clean dest
