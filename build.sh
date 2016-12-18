@@ -2,8 +2,8 @@
 # build.sh --- builds bobhennessey.net and deploys to http://bobhennessey.net
 
 # ensure dependencies are installed
-npm install
-echo "updated npm"
+#npm install
+#echo "updated npm"
 
 # gulp-build the frontend
 gulp --prod
