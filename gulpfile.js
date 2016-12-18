@@ -7,7 +7,6 @@ var gulp = require('gulp'),
     plugins = require('gulp-load-plugins')(),
     del = require('del');
 
-console.log(plugins);
 // get environment -- defaults to dev
 var envIsProd = argv.prod ? true : false;
 console.log(envIsProd ? 'Running gulp for production' : 'Running gulp for development');
@@ -95,7 +94,6 @@ gulp.task('inject_scripts', ['html', 'cache_bust'], function () {
         .pipe(plugins.inject(source, {
             transform: function (filepath) {
                 var hash = busters[filepath.slice(1)];
-                console.log('hash: ', hash, 'filepath: ', filepath);
                 return '<script src="' + filepath + '?' + hash + '"></script>';
             }
         }))
