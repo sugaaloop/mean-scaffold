@@ -1,5 +1,8 @@
 <div ng-controller="homeCtrl as vm" class="container text-center">
     <h1>{{ vm.title }}</h1>
     <p>coming soon...</p>
-    <p>vm.blogs</p>
+    <div ng-repeat="blog in vm.blogs">
+        <h3>{{ blog.title }}</h3>
+        <div>{{ blog.body}}</div>
+    </div>
 </div>
