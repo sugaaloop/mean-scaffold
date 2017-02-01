@@ -1,14 +1,14 @@
 (function () {
     'use strict';
-    angular.module('net.bobhennessey.beers').factory('beerService', beerService);
+    angular.module('net.bobhennessey.beers').factory('beers', beers);
     beerService.$inject = ['beerApi'];
     function beerService(beerApi) {
         var factory = {};
-        factory.beers = [];
+        factory.beerList = [];
 
         factory.getBeers = function () {
             return beerApi.getBeers().then(function (response) {
-                factory.beers = response.data;
+                factory.beerList = response.data;
             });
         }
 

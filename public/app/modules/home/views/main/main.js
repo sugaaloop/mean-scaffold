@@ -12,12 +12,11 @@
             console.log(user, authenticated);
         });
 
-        drupal.viewsLoad('/api/blogs').then(function(response) {
-            console.log(response, response.getResults());
+        drupal.viewsLoad('api/blogs').then(function(response) {
+            vm.blogs = response.results;
         });
 
-
-        // $http.get('http://dev-bhnet-headless.pantheonsite.io/blogs').then(function (response) {
+        // $http.get('http://dev-bhnet-headless.pantheonsite.io/api/blogs').then(function (response) {
         //     vm.blogs = response.data;
         //     console.log(response.data);
         // });

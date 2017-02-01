@@ -1,8 +1,7 @@
-<div ng-controller="beerCtrl as vm">
-    <h1>{{ vm.title }}</h1>
+<div ng-controller="main as vm">
     <ul>
         <li><beer-form></beer-form></li>
-        <li ng-repeat="beer in vm.beers.beers">
+        <li ng-repeat="beer in vm.beers">
             <beer-form beer="beer"><beer-form>
         </li>
     </ul>

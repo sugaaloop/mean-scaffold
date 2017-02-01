@@ -4,31 +4,28 @@
     config.$inject = ['$stateProvider', '$locationProvider', '$provide'];
     function config($stateProvider, $locationProvider, $provide) {
 
-        var env = 'prod';
-        var prodUrlPrefix = 'dist/';
-
         $stateProvider
             .state({
                 name: 'layout',
                 abstract: true,
-                templateUrl: (env === 'prod' ? prodUrlPrefix : 'views/') + 'layout.html'
+                templateUrl: 'app/layout.html'
             })
             .state({
                 name: 'layout.home',
                 url: '/',
-                templateUrl: (env === 'prod' ? prodUrlPrefix : 'app/modules/home/') + 'homeIndex.html'
+                templateUrl: 'app/modules/home/views/main/index.html'
             })
             .state({
                 name: 'layout.beers',
                 url: '/beers',
-                templateUrl: (env === 'prod' ? prodUrlPrefix : 'app/modules/beers/') + 'beersIndex.html'
+                templateUrl: 'app/modules/beers/views/main/index.html'
             });
 
         $locationProvider.html5Mode(true);
 
         // drupal config
         $provide.value('drupalSettings', {
-            sitePath: 'http://dev-bhnet-headless.pantheonsite.io/'
+            sitePath: 'http://dev-bhnet-headless.pantheonsite.io'
         });
 
     }
