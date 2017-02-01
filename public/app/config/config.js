@@ -1,8 +1,8 @@
 (function () {
     'use strict';
     angular.module('net.bobhennessey').config(config);
-    config.$inject = ['$stateProvider', '$locationProvider'];
-    function config($stateProvider, $locationProvider) {
+    config.$inject = ['$stateProvider', '$locationProvider', '$provide'];
+    function config($stateProvider, $locationProvider, $provide) {
 
         var env = 'prod';
         var prodUrlPrefix = 'dist/';
@@ -25,6 +25,11 @@
             });
 
         $locationProvider.html5Mode(true);
+
+        // drupal config
+        $provide.value('drupalSettings', {
+            sitePath: 'http://dev-bhnet-headless.pantheonsite.io/'
+        });
 
     }
 })();
