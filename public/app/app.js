@@ -1,12 +1,6 @@
 (function () {
     'use strict';
 
-    angular.module('net.bobhennessey.home', []);
-
-    angular.module('net.bobhennessey.beers', []);
-
-    angular.module('net.bobhennessey.utils', []);
-
     angular.module('net.bobhennessey.dependencies', [
         'ui.router',
         'angular-drupal'
@@ -14,7 +8,7 @@
 
     angular.module('net.bobhennessey', [
         'net.bobhennessey.dependencies',
-        'net.bobhennessey.utils',
+        'net.bobhennessey.structure',
         'net.bobhennessey.home',
         'net.bobhennessey.beers'
     ]);
