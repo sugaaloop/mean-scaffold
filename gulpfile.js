@@ -100,4 +100,8 @@ gulp.task('inject_scripts', ['html', 'cache_bust'], function () {
         .pipe(gulp.dest(paths.distSrc));
 });
 
+gulp.task('delete_busters', ['inject_scripts', function () {
+    return del(paths.distSrc + '/busters.json');
+}]);
+
 gulp.task('default', ['inject_scripts']);

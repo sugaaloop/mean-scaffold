@@ -1,0 +1,10 @@
+
+
+stages:
+    - build
+    - test
+    - deploy
+
+before_script:
+    - npm install
+    - gulp --prod
