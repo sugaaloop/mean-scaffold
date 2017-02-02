@@ -9,8 +9,13 @@ module.exports = function(argv) {
     var config = {
         distSrc: 'public/dist',
         scripts: [
-            'public/libs/**/*.js',
+            'public/libs/jdrupal/jdrupal.min.js',
+            'public/libs/angular-drupal/angular-drupal.js',
+            'public/libs/ui-router/release/angular-ui-router.js',
             'public/app/**/*.js'
+        ],
+        html: [
+            'public/**/*.html'
         ],
         scriptsDestFile: 'scripts.min.js',
         // sassSrc: [
