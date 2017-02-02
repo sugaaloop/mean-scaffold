@@ -19,45 +19,48 @@ gulp.task('clean', function () {
 });
 
 gulp.task('cssPlugins', ['clean'], function () {
-    return gulp.src(paths.cssPlugins)
+    return gulp.src(config.cssPlugins)
         .pipe(_$.cleanCss())
         .pipe(_$.concat('css_plugins.min.css'))
         .pipe(gulp.dest(paths.distSrc));
 });
 
 gulp.task('appCss', ['cssPlugins'], function () {
-    return gulp.src(paths.appCss)
+    return gulp.src(config.appCss)
         .pipe(_$.cleanCss({ relativeTo: paths.distSrc, target: paths.distSrc }))
         .pipe(_$.concat('application.min.css'))
         .pipe(gulp.dest(paths.distSrc));
 });
 
 gulp.task('scripts_prod', ['clean'], function () {
-    return gulp.src(paths.scripts)
+    return gulp.src(config.scripts)
         .pipe(_$.uglify())
         .pipe(_$.concat(config.scriptsDestFile))
         .pipe(gulp.dest(config.distSrc));
 });
 
-gulp.task('scripts_dev', ['clean'], function () {
-    return gulp.src((config.scripts))
-        .pipe(_$.rename({ dirname: '' }))
-        .pipe(gulp.dest(config.distSrc));
-});
-
-gulp.task('cache_bust', [(config.isProd ? 'scripts_prod' : 'scripts_dev')], function () {
+gulp.task('cache_bust_prod', ['scripts_prod'], function () {
     return gulp.src(config.distSrc + '/*.js')
         .pipe(_$.buster({ relativePath: 'public' }))
         .pipe(gulp.dest(config.distSrc));
 });
 
-gulp.task('inject_scripts', ['html', 'cache_bust'], function () {
+gulp.task('cache_bust_dev', ['clean'], function () {
+    return gulp.src(config.scripts)
+        .pipe(_$.buster())
+        .pipe(gulp.dest(config.distSrc));
+});
+
+gulp.task('inject_scripts', [(config.isProd ? 'cache_bust_prod' : 'cache_bust_dev')], function () {
     var busters = require('./' + config.distSrc + '/busters.json');
-    var source = gulp.src('dist/*.js', { cwd: __dirname + '/public' });
-    return gulp.src(config.distSrc + '/index.html')
-        .pipe(_$.inject(source, {
+    var sourceGlob = config.isProd ? 'public/dist/*.js' : config.scripts;
+    console.log('__dirname: ', __dirname);
+    var source = gulp.src(sourceGlob);
+    return gulp.src(config.index)
+        .pipe(_$.inject(source.pipe(_$.angularFilesort()), {
             transform: function (filepath) {
                 var hash = busters[filepath.slice(1)];
+                console.log(filepath + '?' + hash);
                 return '<script src="' + filepath + '?' + hash + '"></script>';
             }
         }))
@@ -73,4 +76,4 @@ gulp.task('watch', function() {
     gulp.watch(config.html, ['inject_scripts']);
 });
 
-gulp.task('default', ['inject_scripts', 'delete_busters', 'watch']);
+gulp.task('default', ['inject_scripts']);
