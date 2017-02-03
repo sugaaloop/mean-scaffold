@@ -57,7 +57,7 @@ gulp.task('inject_scripts', [(config.isProd ? 'cache_bust_prod' : 'cache_bust_de
     console.log('__dirname: ', __dirname);
     var source = gulp.src(sourceGlob);
     return gulp.src(config.index)
-        .pipe(_$.inject(source.pipe(_$.angularFilesort()), {
+        .pipe(_$.inject(source, {
             transform: function (filepath) {
                 var hash = busters[filepath.slice(1)];
                 console.log(filepath + '?' + hash);
@@ -72,8 +72,8 @@ gulp.task('delete_busters', ['inject_scripts'], function () {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(config.scripts, ['inject_scripts']);
-    gulp.watch(config.html, ['inject_scripts']);
+    gulp.watch(config.scripts, ['inject_scripts', 'delete_busters']);
+    //gulp.watch(config.html, ['inject_scripts', 'delete_busters']);
 });
 
-gulp.task('default', ['inject_scripts']);
+gulp.task('default', ['inject_scripts', 'delete_busters', 'watch']);

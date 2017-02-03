@@ -44,12 +44,14 @@ app.use('/api', api);
 // frontend routes =========================================================
 // route to handle all angular requests
 app.get('*', function(req, res) {
-    res.sendfile('./public/dist/index.html');
+    console.log('all gets');
+    //res.sendfile('./public/dist/index.html');
+    res.send('yeoooooo');
 });
 
 
 // start app ===============================================
-// startup our app at http://localhost:8080
+// startup our app at http://localhost:8282
 app.listen(port);
 
 // shoutout to the user
