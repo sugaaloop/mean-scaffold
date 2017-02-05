@@ -46,19 +46,21 @@ gulp.task('lint', ['clean'], function () {
 
 gulp.task('scripts', ['lint'], function () {
     if (config.isProd) {
-        return gulp.src(config.scripts)
+        var promise = gulp.src(config.scripts)
             .pipe(_$.uglify())
             .pipe(_$.concat(config.scriptsDestFile))
             .pipe(gulp.dest(config.distSrc));
+        config.scripts = config.distScripts;
+        return promise;
     } else {
         return Q();
     }
 });
 
 gulp.task('cache_bust', ['scripts'], function () {
-        return gulp.src(config.scripts)
-            .pipe(_$.buster())
-            .pipe(gulp.dest(config.distSrc));
+    return gulp.src(config.scripts)
+        .pipe(_$.buster())
+        .pipe(gulp.dest(config.distSrc));
 });
 
 gulp.task('inject_scripts', ['cache_bust'], function () {

@@ -10,15 +10,13 @@ var pkg = require('./package');
 module.exports = function(argv) {
     var config = {
         distSrc: 'dist',
-        scripts: (argv.prod ?
-            'dist/*.js' :
-            [
-                'libs/jdrupal/jdrupal.min.js',
-                'libs/angular-drupal/angular-drupal.js',
-                'libs/ui-router/release/angular-ui-router.js',
-                'app/**/*.js'
-            ]
-        ),
+        scripts: [
+            'libs/jdrupal/jdrupal.min.js',
+            'libs/angular-drupal/angular-drupal.js',
+            'libs/ui-router/release/angular-ui-router.js',
+            'app/**/*.js'
+        ],
+        distScripts: 'dist/*.js',
         html: [
             './**/*.html'
         ],
