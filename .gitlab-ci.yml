@@ -5,6 +5,7 @@ build:
         - whoami
         - pwd
         - ls
+        - hostname
         - npm --version
         - node --version
         - gulp --version
