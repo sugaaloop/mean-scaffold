@@ -9,6 +9,6 @@
     function ctrl(beers) {
         var vm = this;
         vm.beers = beers;
-        vm.selectedBeer;
+        //vm.selectedBeer;
     }
 })();

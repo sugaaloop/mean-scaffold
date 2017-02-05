@@ -5,6 +5,8 @@
 
 'use strict';
 
+var pkg = require('./package');
+
 module.exports = function(argv) {
     var config = {
         distSrc: 'dist',
@@ -33,7 +35,8 @@ module.exports = function(argv) {
         //     '!Content/CSS/application.min.css'
         // ],
         index: 'views/index.html',
-        isProd: argv.prod ? true : false
+        isProd: argv.prod ? true : false,
+        pkg: pkg
     };
 
     return config;

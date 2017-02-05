@@ -38,7 +38,13 @@ gulp.task('appCss', ['cssPlugins'], function () {
         .pipe(gulp.dest(paths.distSrc));
 });
 
-gulp.task('scripts', ['clean'], function () {
+gulp.task('lint', ['clean'], function () {
+    return gulp.src('app/**/*.js')
+        .pipe(_$.jshint(config.pkg.jshintConfig))
+        .pipe(_$.jshint.reporter('default'));
+});
+
+gulp.task('scripts', ['lint'], function () {
     if (config.isProd) {
         return gulp.src(config.scripts)
             .pipe(_$.uglify())
@@ -85,5 +91,11 @@ gulp.task('watch', function() {
     gulp.watch(config.html, ['rebuild']);
 });
 
-//gulp.task('default', ['inject_scripts', 'watch']);
-gulp.task('default', ['inject_scripts', 'delete_busters', 'watch']);
+gulp.task('build', (config.isProd ?
+        ['inject_scripts', 'delete_busters'] :
+        ['inject_scripts', 'delete_busters', 'watch']),
+    function(done) {
+        done();
+});
+
+gulp.task('default', ['build']);
