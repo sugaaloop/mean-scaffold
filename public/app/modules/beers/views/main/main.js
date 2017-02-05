@@ -7,4 +7,4 @@
 
         beers.getBeers();
     }
-});
+})();

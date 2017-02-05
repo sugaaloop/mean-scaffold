@@ -28,6 +28,6 @@ h1 {
     color: #315481;
 }
 
-p {
+p,a {
     font-size: 2rem;
 }

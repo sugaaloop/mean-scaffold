@@ -13,7 +13,7 @@
             return $http.get('/api/beers/id');
         }
 
-        factory.addBeeer = function (beer) {
+        factory.addBeer = function (beer) {
             return $http.post('/api/beers', beer);
         }
 

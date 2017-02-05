@@ -13,12 +13,14 @@
             .state({
                 name: 'layout.home',
                 url: '/',
-                templateUrl: 'app/modules/home/views/main/index.html'
+                templateUrl: 'app/modules/home/views/main/index.html',
+                controller: 'homeCtrl'
             })
             .state({
                 name: 'layout.beers',
                 url: '/beers',
-                templateUrl: 'app/modules/beers/views/main/index.html'
+                templateUrl: 'app/modules/beers/views/main/index.html',
+                controller: 'beersCtrl'
             });
 
         $locationProvider.html5Mode(true);

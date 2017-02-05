@@ -5,6 +5,7 @@
     angular.module('net.bobhennessey.home', []);
     angular.module('net.bobhennessey.beers', []);
 
+
     angular.module('net.bobhennessey.dependencies', [
         'ui.router',
         'angular-drupal'

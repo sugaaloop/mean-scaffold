@@ -7,15 +7,18 @@
 
 module.exports = function(argv) {
     var config = {
-        distSrc: 'public/dist',
-        scripts: [
-            'public/libs/jdrupal/jdrupal.min.js',
-            'public/libs/angular-drupal/angular-drupal.js',
-            'public/libs/ui-router/release/angular-ui-router.js',
-            'public/app/**/*.js'
-        ],
+        distSrc: 'dist',
+        scripts: (argv.prod ?
+            'dist/*.js' :
+            [
+                'libs/jdrupal/jdrupal.min.js',
+                'libs/angular-drupal/angular-drupal.js',
+                'libs/ui-router/release/angular-ui-router.js',
+                'app/**/*.js'
+            ]
+        ),
         html: [
-            'public/**/*.html'
+            './**/*.html'
         ],
         scriptsDestFile: 'scripts.min.js',
         // sassSrc: [
@@ -29,7 +32,7 @@ module.exports = function(argv) {
         //     '!Content/CSS/application.css',
         //     '!Content/CSS/application.min.css'
         // ],
-        index: 'public/index.html',
+        index: 'views/index.html',
         isProd: argv.prod ? true : false
     };
 
