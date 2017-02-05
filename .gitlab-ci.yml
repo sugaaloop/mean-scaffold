@@ -1,15 +1,8 @@
 
 before_script:
     - npm install -g gulp
+    - npm install
 
 build:
     script:
-        - whoami
-        - pwd
-        - ls
-        - hostname
-        - npm --version
-        - node --version
-        - gulp --version
-        - npm install
         - gulp --prod
