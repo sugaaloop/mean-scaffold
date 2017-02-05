@@ -2,6 +2,9 @@
 
 build:
     script:
+        - whoami
+        - pwd
+        - ls
         - npm --version
         - node --version
         - gulp --version
