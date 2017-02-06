@@ -17,4 +17,4 @@ deploy_prod:
         name: production
         url: http://bobhennessey.net
     only:
-        -master
+        - master
