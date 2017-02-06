@@ -11,7 +11,8 @@ build:
 
 deploy_prod:
     stage: deploy
-    script: "sh ./deploy_prod.sh"
+    script:
+        - sh ./deploy_prod.sh
     environment:
         name: production
         url: http://bobhennessey.net
