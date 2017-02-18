@@ -14,6 +14,10 @@
                 var user = drupal.currentUser();
                 var authenticated = user.isAuthenticated();
                 console.log(user, authenticated);
+
+                drupal.loadNode(4).then(function (node){
+                    console.log(node);
+                });
             });
 
             drupal.viewsLoad('api/blogs').then(function(response) {
