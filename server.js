@@ -17,7 +17,7 @@ var port = process.env.PORT || 8282;
 
 // connect to our mongoDB database
 // (uncomment after you enter in your own credentials in config/db.js)
-//mongoose.connect(db.url);
+mongoose.connect(db.url);
 
 // get all data/stuff of the body (POST) parameters
 // parse application/json
@@ -49,7 +49,7 @@ app.get('*', function(req, res) {
 
 
 // start app ===============================================
-// startup our app at http://localhost:8080
+// startup our app at http://localhost:8282
 app.listen(port);
 
 // shoutout to the user

@@ -1,8 +1,8 @@
-<div ng-controller="main as vm">
+<div>
     <ul>
-        <li><beer-form></beer-form></li>
-        <li ng-repeat="beer in vm.beers">
-            <beer-form beer="beer"><beer-form>
+        <li><beer-detail></beer-detail></li>
+        <li ng-repeat="beer in vm.beers.beerList">
+            <beer-detail beer="beer" ng-click=""><beer-detail>
         </li>
     </ul>
 </div>

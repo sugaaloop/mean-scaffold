@@ -8,9 +8,15 @@
 var gulp = require('gulp'),
     argv = require('yargs').argv,
     _$ = require('gulp-load-plugins')(),
+    Q = require('q'),
+    browserSync = require('browser-sync').create(),
     del = require('del');
 
+// get configuration
 var config = require('./gulp.config')(argv);
+
+// change dir into public
+process.chdir('public');
 
 console.log(config.isProd ? 'Running gulp for production' : 'Running gulp for development');
 
@@ -32,35 +38,38 @@ gulp.task('appCss', ['cssPlugins'], function () {
         .pipe(gulp.dest(paths.distSrc));
 });
 
-gulp.task('scripts_prod', ['clean'], function () {
-    return gulp.src(config.scripts)
-        .pipe(_$.uglify())
-        .pipe(_$.concat(config.scriptsDestFile))
-        .pipe(gulp.dest(config.distSrc));
+gulp.task('lint', ['clean'], function () {
+    return gulp.src('app/**/*.js')
+        .pipe(_$.jshint(config.pkg.jshintConfig))
+        .pipe(_$.jshint.reporter('default'));
 });
 
-gulp.task('cache_bust_prod', ['scripts_prod'], function () {
-    return gulp.src(config.distSrc + '/*.js')
-        .pipe(_$.buster({ relativePath: 'public' }))
-        .pipe(gulp.dest(config.distSrc));
+gulp.task('scripts', ['lint'], function () {
+    if (config.isProd) {
+        var promise = gulp.src(config.scripts)
+            .pipe(_$.uglify())
+            .pipe(_$.concat(config.scriptsDestFile))
+            .pipe(gulp.dest(config.distSrc));
+        config.scripts = config.distScripts;
+        return promise;
+    } else {
+        return Q();
+    }
 });
 
-gulp.task('cache_bust_dev', ['clean'], function () {
+gulp.task('cache_bust', ['scripts'], function () {
     return gulp.src(config.scripts)
         .pipe(_$.buster())
         .pipe(gulp.dest(config.distSrc));
 });
 
-gulp.task('inject_scripts', [(config.isProd ? 'cache_bust_prod' : 'cache_bust_dev')], function () {
-    var busters = require('./' + config.distSrc + '/busters.json');
-    var sourceGlob = config.isProd ? 'public/dist/*.js' : config.scripts;
-    console.log('__dirname: ', __dirname);
-    var source = gulp.src(sourceGlob);
+gulp.task('inject_scripts', ['cache_bust'], function () {
+    var busters = require('./public/' + config.distSrc + '/busters.json');
+    var source = gulp.src(config.scripts);
     return gulp.src(config.index)
-        .pipe(_$.inject(source.pipe(_$.angularFilesort()), {
+        .pipe(_$.inject(source, {
             transform: function (filepath) {
                 var hash = busters[filepath.slice(1)];
-                console.log(filepath + '?' + hash);
                 return '<script src="' + filepath + '?' + hash + '"></script>';
             }
         }))
@@ -71,9 +80,24 @@ gulp.task('delete_busters', ['inject_scripts'], function () {
     return del(config.distSrc + '/busters.json');
 });
 
-gulp.task('watch', function() {
-    gulp.watch(config.scripts, ['inject_scripts']);
-    gulp.watch(config.html, ['inject_scripts']);
+gulp.task('rebuild', ['inject_scripts', 'delete_busters'], function (done) {
+    browserSync.reload();
+    done();
 });
 
-gulp.task('default', ['inject_scripts']);
+gulp.task('watch', function() {
+    browserSync.init({
+        proxy: 'localhost:8282'
+    });
+    gulp.watch(config.scripts, ['rebuild']);
+    gulp.watch(config.html, ['rebuild']);
+});
+
+gulp.task('build', (config.isProd ?
+        ['inject_scripts', 'delete_busters'] :
+        ['inject_scripts', 'delete_busters', 'watch']),
+    function(done) {
+        done();
+});
+
+gulp.task('default', ['build']);

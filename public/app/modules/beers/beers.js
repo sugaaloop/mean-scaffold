@@ -1,8 +1,8 @@
 (function () {
     'use strict';
     angular.module('net.bobhennessey.beers').factory('beers', beers);
-    beerService.$inject = ['beerApi'];
-    function beerService(beerApi) {
+    beers.$inject = ['beerApi'];
+    function beers(beerApi) {
         var factory = {};
         factory.beerList = [];
 
@@ -16,7 +16,7 @@
             return beerApi.getBeer(id);
         }
 
-        factory.addBeeer = function (beer) {
+        factory.addBeer = function (beer) {
             return beerApi.addBeer(beer);
         }
 

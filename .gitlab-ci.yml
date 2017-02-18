@@ -1,10 +1,16 @@
 
-
-stages:
-    - build
-    - test
-    - deploy
-
 before_script:
     - npm install
-    - gulp --prod
+
+build:
+    stage: build
+    script:
+        - node_modules/.bin/gulp --prod
+
+deploy_prod:
+    stage: deploy
+    script:
+        - sh ./deploy_prod.sh
+    environment:
+        name: production
+        url: http://bobhennessey.net
