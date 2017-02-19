@@ -18,10 +18,8 @@
     background-size: cover;
 }*/
 
-.container {
+.page {
     min-height: 50rem;
-}
-.container > * {
 }
 
 h1 {
@@ -30,4 +28,8 @@ h1 {
 
 p,a {
     font-size: 2rem;
+}
+
+.hover-border:hover {
+    border: 2px dashed black;
 }

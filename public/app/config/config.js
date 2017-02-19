@@ -12,9 +12,19 @@
             })
             .state({
                 name: 'layout.home',
-                url: '/',
+                abstract: true,
                 templateUrl: 'app/modules/home/views/main/index.html',
                 controller: 'homeCtrl'
+            })
+            .state({
+                name: 'layout.home.index',
+                url: '/',
+                template: '<p>INDEX</p>'
+            })
+            .state({
+                name: 'layout.home.login',
+                url: '/login',
+                template: '<login-form></login-form>'
             })
             .state({
                 name: 'layout.beers',
