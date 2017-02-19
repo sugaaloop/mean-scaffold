@@ -1,0 +1,15 @@
+drupal.connect().then(function() {
+    var user = drupal.currentUser();
+    var authenticated = user.isAuthenticated();
+    console.log(user, authenticated);
+
+    drupal.nodeLoad(4).then(function (node) {
+        console.log(node);
+    });
+});
+
+drupal.viewsLoad('api/pets').then(function(response) {
+    $scope.$apply(function() {
+        vm.pets = response.results;
+    });
+});

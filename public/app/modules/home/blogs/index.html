@@ -1,4 +1,7 @@
-<div ng-repeat="blog in vm.blogs">
-    <h3>{{ blog.title }}</h3>
-    <div>{{ blog.body}}</div>
+<div drupal-content-item></div>
+
+<div ng-repeat="pet in vm.pets">
+    <h3>{{ pet.name }}</h3>
+    <p>Breed: {{ pet.breedId }}</p>
+    <p>Dob: {{ pet.dob }}</p>
 </div>
