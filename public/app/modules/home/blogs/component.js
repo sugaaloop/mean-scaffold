@@ -11,7 +11,7 @@
         vm.something = 'adsf';
 
         vm.$onInit = function() {
-            
+
         }
     }
 })();

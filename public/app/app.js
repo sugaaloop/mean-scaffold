@@ -8,7 +8,8 @@
 
     angular.module('net.bobhennessey.dependencies', [
         'ui.router',
-        'angular-drupal'
+        'angular-drupal',
+        'bhDrupal'
     ]);
 
     angular.module('net.bobhennessey', [
