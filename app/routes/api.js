@@ -1,70 +1,65 @@
 // app/routes.js
 
 var express = require('express');
-var Beer = require('../models/beer');
+var Object = require('../models/object');
 
 var router = express.Router();
 
-
 // server routes ===========================================================
 
-// GET all beers
-router.get('/beers', function(req, res) {
-    Beer.find(function(err, beers) {
+// GET all objects
+router.get('/objects', function(req, res) {
+    Object.find(function(err, objects) {
         if (err)
             res.send(err);
-        res.json(beers);
+        res.json(objects);
     });
 });
 
-// POST create a beer
-router.post('/beers', function (req, res) {
-    var beer = new Beer();
-    beer.name = req.body.name;
-    beer.brewer = req.body.brewer;
-    beer.style = req.body.style;
-    beer.abv = req.body.abv;
+// POST create an object
+router.post('/objects', function (req, res) {
+    var object = new Object();
+    object.name = req.body.name;
+    object.description = req.body.description;
 
-    beer.save(function(err) {
+    object.save(function(err) {
         if (err)
             res.send(err);
-        res.json({ message: "beer successfully created" });
+        res.json({ message: "object successfully created" });
     });
 });
 
-// GET a beer
-router.get('/beers/:beer_id', function (req, res) {
-    Beer.findById(req.params.beer_id, function (err, beer) {
+// GET an object
+router.get('/objects/:object_id', function (req, res) {
+    Object.findById(req.params.object_id, function (err, object) {
         if (err)
             res.send(err);
-        res.json(beer);
+        res.json(object);
     });
 });
 
-// PUT modify a beer
-router.put('/beers/:beer_id', function (req, res) {
-    Beer.findById(req.params.beer_id, function (err, beer) {
+// PUT modify an object
+router.put('/objects/:object_id', function (req, res) {
+    Object.findById(req.params.object_id, function (err, object) {
         if (err)
             res.send(err);
-        beer.name = req.body.name;
-        beer.brewer = req.body.brewer;
-        beer.style = req.body.style;
-        beer.abv = req.body.abv;
+        object.name = req.body.name;
+        object.description = req.body.description;
 
-        beer.save(function(err) {
+        object.save(function(err) {
             if (err)
                 res.send(err);
-            res.json({ message: "beer successfully modified" });
+            res.json({ message: "object successfully modified" });
         });
     });
 });
 
-// DELETE a beer
-router.delete('/beers/:beer_id', function (req, res) {
-    Beer.remove(req.params.beer_id, function (err, beer) {
+// DELETE an object
+router.delete('/objects/:object_id', function (req, res) {
+    Object.remove(req.params.object_id, function (err, object) {
         if (err)
             res.send(err);
-        res.json({ message: "beer successfully removed" });
+        res.json({ message: "object successfully removed" });
     });
 });
 

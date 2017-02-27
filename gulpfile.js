@@ -1,6 +1,6 @@
 /**
  * gulpfile.js
- * Usage: [from root] : gulp
+ * Usage: [from root] : gulp [prod]
  */
 
 'use strict';
@@ -87,10 +87,9 @@ gulp.task('rebuild', ['inject_scripts', 'delete_busters'], function (done) {
 
 gulp.task('watch', function() {
     browserSync.init({
-        proxy: 'localhost:8282'
+        proxy: 'localhost:8080'
     });
-    gulp.watch(config.scripts, ['rebuild']);
-    gulp.watch(config.html, ['rebuild']);
+    gulp.watch(config.watchTargets, ['rebuild']);
 });
 
 gulp.task('build', (config.isProd ?

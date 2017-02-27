@@ -1,21 +1,17 @@
 (function () {
     'use strict';
 
-    angular.module('net.bobhennessey.structure', []);
-    angular.module('net.bobhennessey.home', []);
-    angular.module('net.bobhennessey.beers', []);
+    angular.module('mean-scaffold.structure', []);
+    angular.module('mean-scaffold.home', []);
 
-
-    angular.module('net.bobhennessey.dependencies', [
-        'ui.router',
-        'angular-drupal',
-        'bhDrupal'
+    angular.module('mean-scaffold.dependencies', [
+        'ui.router'
     ]);
 
-    angular.module('net.bobhennessey', [
-        'net.bobhennessey.dependencies',
-        'net.bobhennessey.structure',
-        'net.bobhennessey.home',
-        'net.bobhennessey.beers'
+    angular.module('mean-scaffold', [
+        'mean-scaffold.dependencies',
+        'mean-scaffold.structure',
+        'mean-scaffold.home'
     ]);
+    
 })();

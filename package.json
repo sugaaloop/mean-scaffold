@@ -1,5 +1,5 @@
 {
-    "name": "bobhennessey.net",
+    "name": "mean-scaffold",
     "version": "0.0.1",
     "main": "server.js",
     "dependencies": {

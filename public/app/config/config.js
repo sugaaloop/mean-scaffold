@@ -1,8 +1,8 @@
 (function () {
     'use strict';
-    angular.module('net.bobhennessey').config(config);
-    config.$inject = ['$stateProvider', '$locationProvider', '$provide'];
-    function config($stateProvider, $locationProvider, $provide) {
+    angular.module('mean-scaffold').config(config);
+    config.$inject = ['$stateProvider', '$locationProvider'];
+    function config($stateProvider, $locationProvider) {
 
         $stateProvider
             .state({
@@ -13,32 +13,16 @@
             .state({
                 name: 'layout.home',
                 abstract: true,
-                templateUrl: 'app/modules/home/views/main/index.html',
+                templateUrl: 'app/components/home/views/main/index.html',
                 controller: 'homeCtrl'
             })
             .state({
                 name: 'layout.home.index',
                 url: '/',
-                template: '<p>INDEX</p>'
-            })
-            .state({
-                name: 'layout.home.login',
-                url: '/login',
-                template: '<login-form></login-form>'
-            })
-            .state({
-                name: 'layout.beers',
-                url: '/beers',
-                templateUrl: 'app/modules/beers/views/main/index.html',
-                controller: 'beersCtrl'
+                template: '<home-component></home-component>'
             });
 
         $locationProvider.html5Mode(true);
-
-        // drupal config
-        $provide.value('drupalSettings', {
-            sitePath: 'http://dev-bhnet-headless.pantheonsite.io'
-        });
 
     }
 })();
